@@ -1,0 +1,142 @@
+{
+	"title": "silly weather app",
+	"weatherCard": {
+		"time": {
+			"now": "now",
+			"night": "night",
+			"tomorrow": "tomorrow",
+			"tomorrowNight": "tomorrow night"
+		}
+	},
+	"weatherStat": {
+		"apparentTemperature": {
+			"short": "apparent",
+			"default": "apparent temperature"
+		},
+		"temperatureMin": {
+			"short": "min temp.",
+			"default": "lowest temperature"
+		},
+		"uvIndex": {
+			"short": "uv index",
+			"default": "uv index"
+		},
+		"windSpeed": {
+			"short": "wind",
+			"default": "wind speed"
+		},
+		"surfacePressure": {
+			"short": "pressure",
+			"default": "pressure"
+		},
+		"rain": {
+			"short": "rain",
+			"default": "rain"
+		},
+		"showers": {
+			"short": "showers",
+			"default": "showers"
+		},
+		"snow": {
+			"short": "snow",
+			"default": "snow"
+		},
+		"humidity": {
+			"short": "humidity",
+			"default": "humidity"
+		}
+	},
+	"weatherIconAlt": {
+		"clearDay": "sun",
+		"clearNight": "moon",
+		"slightlyCloudy": "sun and a few clouds",
+		"slightlyCloudyNigth": "moon and a few clouds",
+		"cloudy": "sun and clouds",
+		"cloudyNight": "moon and clouds",
+		"overcast": "clouds",
+		"rain": "sun and rain",
+		"rainNight": "moon and rain",
+		"overcastRain": "clouds and rain",
+		"thunderstorm": "thunderstorm"
+	},
+	"statCard": {
+		"title": "about the weather"
+	},
+	"weatherAlerts": {
+		"fog": "fog",
+		"heavySnowfall": "heavy snowfall",
+		"violentRainShowers": "violent rain showers",
+		"thunderstorm": "thunderstorm",
+		"thunderstormWithSlightHail": "thunderstorm with slight hail",
+		"thunderstormWithHeavyHail": "thunderstorm with heavy hail"
+	},
+	"locationAutocomplete": {
+		"placeholder": "search for location, e.g. \"Berlin\"",
+		"notFound": "no results",
+		"typeToSearch": "start typing to search for cities"
+	},
+	"detectLocation": {
+		"detect": "detect location"
+	},
+	"hourlyForecast": {
+		"title": "hour by hour"
+	},
+	"dailyForecast": {
+		"title": "next few days"
+	},
+	"weatherClues": {
+		"title": "some tips for you",
+		"hourly": {
+			"clearSky": "it's sunny - go outside! 😎👍",
+			"mainlyClear": "a few clouds here and there - don't worry",
+			"cloudyOrOvercast": "it's cloudy 🙁",
+			"fog": "it's foggy, be careful",
+			"drizzle": "it's just a drizzle",
+			"heavyDrizzle": "okay, the drizzle is quite bad now",
+			"rain": "don't forget the umbrella! ☔",
+			"snow": "look! it's snowing!",
+			"rainShowers": "some heavy rain coming",
+			"snowShowers": "that's a lot of snow",
+			"thunderstorm": "a thunderstorm is coming 💀",
+			"highUvIndex": "high uv index",
+			"error": "this shouldn't be here... contact the author"
+		}
+	},
+	"settings": {
+		"title": "settings",
+		"units": "units",
+		"metric": "metric",
+		"imperial": "imperial",
+		"custom": "custom",
+		"temperatureUnit": "temperature unit",
+		"celsius": "C",
+		"fahrenheit": "F",
+		"windspeedUnit": "wind speed unit",
+		"kmh": "km/h",
+		"mph": "mp/h",
+		"kn": "kn",
+		"precipitationUnit": "precipitation unit",
+		"inch": "inch",
+		"mm": "mm",
+		"save": "save",
+		"cancel": "cancel"
+	},
+	"units": {
+		"celsius": "C",
+		"fahrenheit": "F",
+		"kmh": "km/h",
+		"mph": "mp/h",
+		"kn": "kn",
+		"inch": "inch",
+		"mm": "mm",
+		"hPa": "hPa",
+		"%": "%"
+	},
+	"footer": {
+		"author": "© daniel gołębiewski",
+		"notes": "notes"
+	},
+	"error": {
+		"weatherInfo": "sorry, we could not get weather info"
+	}
+}
