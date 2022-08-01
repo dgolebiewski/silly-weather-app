@@ -5,7 +5,7 @@
 	import type { WeatherForecast } from '$lib/utils/openMeteoForecastApi';
 	import type { LocationChangeEventPayload } from '$lib/types/events';
 	import WeatherCard from '$lib/components/WeatherCard/WeatherCard.svelte';
-	import dayjs from '$lib/utils/dayjs';
+	import dayjs, { ONE_HOUR } from '$lib/utils/dayjs';
 	import { invalidate } from '$app/navigation';
 	import { getMostRelevantStats } from '$lib/utils/weatherStats';
 	import StatCard from '$lib/components/StatCard/StatCard.svelte';
@@ -17,39 +17,13 @@
 	import WeatherCluesCard from '$lib/components/WeatherCluesCard/WeatherCluesCard.svelte';
 	import type { AppSettings } from '$lib/utils/settings';
 	import Footer from '$lib/components/Footer.svelte';
+	import { onMount, onDestroy } from 'svelte';
 
 	export let locationInfo: LocationInfo;
 	export let forecast: WeatherForecast;
 	export let settings: AppSettings;
 
-	let isChangingLocation = false;
-
-	const onLocationChange = async (e: CustomEvent<LocationChangeEventPayload>) => {
-		if (isChangingLocation) {
-			return;
-		}
-
-		isChangingLocation = true;
-
-		const { latLng, locationInfo } = e.detail;
-
-		const response = await fetch(`/location`, {
-			method: 'POST',
-			body: JSON.stringify({
-				latLng,
-				locationInfo
-			})
-		});
-
-		if (response.status === 200) {
-			await invalidate('/');
-		}
-
-		isChangingLocation = false;
-	};
-
-	// idk why, but the page just refuses to work without this - settings is not defined ?????????
-	console.log('settings', settings);
+	let invalidateRouteRoutine: number | NodeJS.Timer | null = null;
 
 	$: weatherCards = getWeatherPoints(forecast.hourlyForecast, forecast.dailyForecast, settings);
 	$: currentWeather = forecast.currentWeather;
@@ -69,6 +43,18 @@
 
 	$: isNight =
 		todayForecast && tomorrowForecast ? checkIsNight(todayForecast, tomorrowForecast) : false;
+
+	onMount(() => {
+		invalidateRouteRoutine = setInterval(() => {
+			invalidate('/');
+		}, ONE_HOUR / 2);
+	});
+
+	onDestroy(() => {
+		if (!invalidateRouteRoutine) return;
+
+		clearInterval(invalidateRouteRoutine);
+	});
 </script>
 
 <svelte:head>
@@ -83,7 +69,7 @@
 
 <div class={isNight ? 'bg-slate-700' : 'bg-sky-200'}>
 	<div class="xl:container mx-auto px-4 py-6">
-		<Header {isNight} {locationInfo} {settings} on:locationChange={onLocationChange} />
+		<Header {isNight} {locationInfo} {settings} />
 		{#if weatherCards}
 			<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
 				<WeatherCard city={locationInfo.city} {...weatherCards[0]} />

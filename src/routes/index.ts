@@ -89,13 +89,14 @@ export const GET: RequestHandler = async ({ clientAddress, locals }: RequestEven
 	}
 
 	if (!settings || !validateSettings(settings)) {
+		settings = getDefaultSettings(
+			locales.get().includes(locationInfo.countryCode.toLowerCase())
+				? locationInfo.countryCode.toLowerCase()
+				: 'en'
+		);
 		await locals.session.set({
 			...locals.session.data,
-			settings: getDefaultSettings(
-				locales.get().includes(locationInfo.countryCode.toLowerCase())
-					? locationInfo.countryCode.toLowerCase()
-					: 'en'
-			)
+			settings
 		});
 	}
 

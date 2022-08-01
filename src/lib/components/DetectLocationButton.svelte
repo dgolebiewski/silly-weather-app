@@ -5,6 +5,7 @@
 	import TextButton from '$lib/components/TextButton.svelte';
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { locale } from '$lib/i18n/translations';
+	import { invalidate } from '$app/navigation';
 
 	export let locationInfo: LocationInfo;
 
@@ -48,6 +49,18 @@
 			city: locationData.city || locationData.locality,
 			countryCode: locationData.countryCode
 		};
+
+		const response = await fetch(`/location`, {
+			method: 'POST',
+			body: JSON.stringify({
+				latLng,
+				locationInfo
+			})
+		});
+
+		if (response.status === 200) {
+			await invalidate('/');
+		}
 
 		dispatch('locationChange', {
 			latLng,
