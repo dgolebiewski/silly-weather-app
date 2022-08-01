@@ -44,9 +44,7 @@ const isSuccessfulLocationApiResponse = (
 	return response.status === 'success';
 };
 
-const getLocationFromClientAddress = async (
-	clientAddress: string
-): Promise<Record<string, any>> => {
+const getLocationFromClientAddress = async (clientAddress: string): Promise<LocationData> => {
 	const locationResponse = (await (
 		await fetch(`${import.meta.env.VITE_LOCATION_API_URL}${clientAddress}`)
 	).json()) as LocationApiResponse | SuccessfulLocationApiResponse;
@@ -65,12 +63,6 @@ const getLocationFromClientAddress = async (
 		locationInfo = {
 			city,
 			countryCode
-		};
-
-		return {
-			latLng,
-			locationInfo,
-			locationResponse
 		};
 	}
 
@@ -117,11 +109,9 @@ export const GET: RequestHandler = async ({ clientAddress, locals }: RequestEven
 
 	return {
 		body: {
-			debug: {
-				locationInfo,
-				forecast,
-				settings
-			}
+			locationInfo,
+			forecast,
+			settings
 		}
 	};
 };
