@@ -81,51 +81,47 @@ const getLocationFromClientAddress = async (
 };
 
 export const GET: RequestHandler = async ({ clientAddress, locals }: RequestEvent) => {
+	let { latLng, locationInfo, settings } = locals.session.data;
+
+	if (!latLng || JSON.stringify(latLng) === JSON.stringify(LAT_LNG_DEFAULT)) {
+		const locationData = await getLocationFromClientAddress(clientAddress);
+		latLng = locationData.latLng;
+		locationInfo = locationData.locationInfo;
+
+		await locals.session.set({
+			latLng,
+			locationInfo
+		});
+	} else {
+		await locals.session.refresh();
+	}
+
+	if (!settings || !validateSettings(settings)) {
+		await locals.session.set({
+			...locals.session.data,
+			settings: getDefaultSettings(
+				locales.get().includes(locationInfo.countryCode.toLowerCase())
+					? locationInfo.countryCode.toLowerCase()
+					: 'en'
+			)
+		});
+	}
+
+	const forecast = await getWeatherForecast(latLng, settings);
+
+	if (!forecast) {
+		return {
+			status: 500
+		};
+	}
+
 	return {
 		body: {
-			debug: await getLocationFromClientAddress(clientAddress)
+			debug: {
+				locationInfo,
+				forecast,
+				settings
+			}
 		}
 	};
-
-	// let { latLng, locationInfo, settings } = locals.session.data;
-
-	// if (!latLng || JSON.stringify(latLng) === JSON.stringify(LAT_LNG_DEFAULT)) {
-	// 	const locationData = await getLocationFromClientAddress(clientAddress);
-	// 	latLng = locationData.latLng;
-	// 	locationInfo = locationData.locationInfo;
-
-	// 	await locals.session.set({
-	// 		latLng,
-	// 		locationInfo
-	// 	});
-	// } else {
-	// 	await locals.session.refresh();
-	// }
-
-	// if (!settings || !validateSettings(settings)) {
-	// 	await locals.session.set({
-	// 		...locals.session.data,
-	// 		settings: getDefaultSettings(
-	// 			locales.get().includes(locationInfo.countryCode.toLowerCase())
-	// 				? locationInfo.countryCode.toLowerCase()
-	// 				: 'en'
-	// 		)
-	// 	});
-	// }
-
-	// const forecast = await getWeatherForecast(latLng, settings);
-
-	// if (!forecast) {
-	// 	return {
-	// 		status: 500
-	// 	};
-	// }
-
-	// return {
-	// 	body: {
-	// 		locationInfo,
-	// 		forecast,
-	// 		settings
-	// 	}
-	// };
 };
