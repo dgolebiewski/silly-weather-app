@@ -99,6 +99,13 @@ export const GET: RequestHandler = async ({ clientAddress, locals }: RequestEven
 		});
 	}
 
+	return {
+		body: {
+			locationInfo,
+			latLng
+		}
+	};
+
 	const forecast = await getWeatherForecast(latLng, settings);
 
 	if (!forecast) {
