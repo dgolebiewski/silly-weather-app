@@ -73,6 +73,15 @@ const getLocationFromClientAddress = async (clientAddress: string): Promise<Loca
 };
 
 export const GET: RequestHandler = async ({ clientAddress, locals }: RequestEvent) => {
+	return {
+		body: {
+			debug: {
+				apiUrl: import.meta.env.VITE_LOCATION_API_URL,
+				clientAddress
+			}
+		}
+	};
+
 	let { latLng, locationInfo, settings } = locals.session.data;
 
 	if (!latLng || JSON.stringify(latLng) === JSON.stringify(LAT_LNG_DEFAULT)) {

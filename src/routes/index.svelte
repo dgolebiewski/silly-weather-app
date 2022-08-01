@@ -1,14 +1,7 @@
 <script lang="ts">
-	import type { LatLng, LocationInfo } from '$lib/utils/common';
-
-	export let latLng: LatLng;
-	export let locationInfo: LocationInfo;
+	export let debug: object;
 </script>
 
 <pre>
-  {JSON.stringify(latLng, null, 2)}
-</pre>
-
-<pre>
-  {JSON.stringify(locationInfo, null, 2)}
+  {JSON.stringify(debug, null, 2)}
 </pre>
