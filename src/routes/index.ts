@@ -44,7 +44,9 @@ const isSuccessfulLocationApiResponse = (
 	return response.status === 'success';
 };
 
-const getLocationFromClientAddress = async (clientAddress: string): Promise<LocationData> => {
+const getLocationFromClientAddress = async (
+	clientAddress: string
+): Promise<Record<string, any>> => {
 	const locationResponse = (await (
 		await fetch(`${import.meta.env.VITE_LOCATION_API_URL}${clientAddress}`)
 	).json()) as LocationApiResponse | SuccessfulLocationApiResponse;
@@ -54,6 +56,8 @@ const getLocationFromClientAddress = async (clientAddress: string): Promise<Loca
 
 	if (isSuccessfulLocationApiResponse(locationResponse)) {
 		const { lat, lng, city, countryCode } = locationResponse;
+
+		return locationResponse;
 
 		latLng = {
 			latitude: lat,
@@ -75,59 +79,56 @@ const getLocationFromClientAddress = async (clientAddress: string): Promise<Loca
 export const GET: RequestHandler = async ({ clientAddress, locals }: RequestEvent) => {
 	return {
 		body: {
-			debug: {
-				apiUrl: import.meta.env.VITE_LOCATION_API_URL,
-				clientAddress
-			}
+			debug: await getLocationFromClientAddress(clientAddress)
 		}
 	};
 
-	let { latLng, locationInfo, settings } = locals.session.data;
+	// let { latLng, locationInfo, settings } = locals.session.data;
 
-	if (!latLng || JSON.stringify(latLng) === JSON.stringify(LAT_LNG_DEFAULT)) {
-		const locationData = await getLocationFromClientAddress(clientAddress);
-		latLng = locationData.latLng;
-		locationInfo = locationData.locationInfo;
+	// if (!latLng || JSON.stringify(latLng) === JSON.stringify(LAT_LNG_DEFAULT)) {
+	// 	const locationData = await getLocationFromClientAddress(clientAddress);
+	// 	latLng = locationData.latLng;
+	// 	locationInfo = locationData.locationInfo;
 
-		await locals.session.set({
-			latLng,
-			locationInfo
-		});
-	} else {
-		await locals.session.refresh();
-	}
+	// 	await locals.session.set({
+	// 		latLng,
+	// 		locationInfo
+	// 	});
+	// } else {
+	// 	await locals.session.refresh();
+	// }
 
-	if (!settings || !validateSettings(settings)) {
-		await locals.session.set({
-			...locals.session.data,
-			settings: getDefaultSettings(
-				locales.get().includes(locationInfo.countryCode.toLowerCase())
-					? locationInfo.countryCode.toLowerCase()
-					: 'en'
-			)
-		});
-	}
+	// if (!settings || !validateSettings(settings)) {
+	// 	await locals.session.set({
+	// 		...locals.session.data,
+	// 		settings: getDefaultSettings(
+	// 			locales.get().includes(locationInfo.countryCode.toLowerCase())
+	// 				? locationInfo.countryCode.toLowerCase()
+	// 				: 'en'
+	// 		)
+	// 	});
+	// }
 
-	return {
-		body: {
-			locationInfo,
-			latLng
-		}
-	};
+	// return {
+	// 	body: {
+	// 		locationInfo,
+	// 		latLng
+	// 	}
+	// };
 
-	const forecast = await getWeatherForecast(latLng, settings);
+	// const forecast = await getWeatherForecast(latLng, settings);
 
-	if (!forecast) {
-		return {
-			status: 500
-		};
-	}
+	// if (!forecast) {
+	// 	return {
+	// 		status: 500
+	// 	};
+	// }
 
-	return {
-		body: {
-			locationInfo,
-			forecast,
-			settings
-		}
-	};
+	// return {
+	// 	body: {
+	// 		locationInfo,
+	// 		forecast,
+	// 		settings
+	// 	}
+	// };
 };
