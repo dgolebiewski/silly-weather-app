@@ -1,0 +1,26 @@
+{
+	"short_name": "weather",
+	"name": "silly weather app",
+	"start_url": "/",
+	"icons": [
+		{
+			"src": "logo512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	],
+	"background_color": "rgb(51, 65, 85)",
+	"display": "standalone",
+	"scope": "/",
+	"theme_color": "#009ef6",
+	"shortcuts": [
+		{
+			"name": "weather today",
+			"short_name": "today",
+			"description": "weather information for today",
+			"url": "/?source=pwa",
+			"icons": [{ "src": "/logo512.png", "sizes": "512x512" }]
+		}
+	],
+	"description": "just a silly weather app"
+}
