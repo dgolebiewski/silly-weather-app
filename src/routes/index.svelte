@@ -1,3 +1,16 @@
+<script context="module" lang="ts">
+	import type { LoadEvent } from '@sveltejs/kit';
+
+	export const load = ({ stuff, props }: LoadEvent) => {
+		return {
+			props: {
+				...props,
+				isNight: stuff.isNight
+			}
+		};
+	};
+</script>
+
 <script lang="ts">
 	import { browser } from '$app/env';
 	import { t } from '$lib/i18n/translations';
@@ -12,13 +25,11 @@
 	import Header from '$lib/components/Header.svelte';
 	import HourlyWeatherCard from '$lib/components/HourlyWeatherCard/HourlyWeatherCard.svelte';
 	import DailyWeatherCard from '$lib/components/DailyWeatherCard/DailyWeatherCard.svelte';
-	import { isNight as checkIsNight } from '$lib/utils/night';
 	import WeatherCluesCard from '$lib/components/WeatherCluesCard/WeatherCluesCard.svelte';
 	import type { AppSettings } from '$lib/utils/settings';
 	import Footer from '$lib/components/Footer.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import SearchBar from '$lib/components/SearchBar/SearchBar.svelte';
-	import Settings from '$lib/components/Settings/Settings.svelte';
 	import LinkButton from '$lib/components/Input/LinkButton.svelte';
 	import Container from '$lib/components/Container.svelte';
 
@@ -26,6 +37,7 @@
 	export let locationInfo: LocationInfo;
 	export let forecast: WeatherForecast;
 	export let settings: AppSettings;
+	export let isNight: boolean;
 
 	let invalidateRouteRoutine: number | NodeJS.Timer | null = null;
 
@@ -44,9 +56,6 @@
 	$: dailyForecast = forecast.dailyForecast.filter((item) =>
 		dayjs(item.time).isAfter(dayjs().tz('UTC'))
 	);
-
-	$: isNight =
-		todayForecast && tomorrowForecast ? checkIsNight(todayForecast, tomorrowForecast) : false;
 
 	onMount(() => {
 		invalidateRouteRoutine = setInterval(() => {
@@ -71,49 +80,47 @@
 	>
 </svelte:head>
 
-<div class={isNight ? 'bg-slate-700' : 'bg-sky-200'}>
-	<Container>
-		<Header {isNight}>
-			<LinkButton href="/settings" dark={isNight}>
-				<i class="mi-settings" />
-			</LinkButton>
-		</Header>
-		<SearchBar {latLng} {locationInfo} {isNight} />
-		{#if weatherCards}
-			<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-				<WeatherCard city={locationInfo.city} {...weatherCards[0]} />
-				<WeatherCard city={locationInfo.city} {...weatherCards[1]} />
+<Container>
+	<Header {isNight}>
+		<LinkButton href="/settings" dark={isNight}>
+			<i class="mi-settings" />
+		</LinkButton>
+	</Header>
+	<SearchBar {latLng} {locationInfo} {isNight} />
+	{#if weatherCards}
+		<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+			<WeatherCard city={locationInfo.city} {...weatherCards[0]} />
+			<WeatherCard city={locationInfo.city} {...weatherCards[1]} />
 
-				{#if currentWeatherStats}
-					<div class="md:col-span-2 xl:col-span-1">
-						<StatCard stats={currentWeatherStats.secondaryStats} />
-					</div>
-				{/if}
-
-				{#if todayForecast && tomorrowForecast}
-					<div class="md:col-span-2">
-						<HourlyWeatherCard
-							sunrise={dayjs(todayForecast.sunrise)}
-							sunset={dayjs(todayForecast.sunset)}
-							tomorrowSunrise={dayjs(tomorrowForecast.sunrise)}
-							{hourlyForecast}
-							{settings}
-						/>
-					</div>
-				{/if}
-
-				<WeatherCard city={locationInfo.city} {...weatherCards[2]} />
-
-				<WeatherCluesCard {hourlyForecast} />
-
-				<div class="md:col-span-2">
-					<DailyWeatherCard {dailyForecast} {settings} />
+			{#if currentWeatherStats}
+				<div class="md:col-span-2 xl:col-span-1">
+					<StatCard stats={currentWeatherStats.secondaryStats} />
 				</div>
-			</div>
-		{:else}
-			<p class="text-center">{$t('common.error.weatherInfo')}</p>
-		{/if}
-	</Container>
+			{/if}
 
-	<Footer dark={isNight} />
-</div>
+			{#if todayForecast && tomorrowForecast}
+				<div class="md:col-span-2">
+					<HourlyWeatherCard
+						sunrise={dayjs(todayForecast.sunrise)}
+						sunset={dayjs(todayForecast.sunset)}
+						tomorrowSunrise={dayjs(tomorrowForecast.sunrise)}
+						{hourlyForecast}
+						{settings}
+					/>
+				</div>
+			{/if}
+
+			<WeatherCard city={locationInfo.city} {...weatherCards[2]} />
+
+			<WeatherCluesCard {hourlyForecast} />
+
+			<div class="md:col-span-2">
+				<DailyWeatherCard {dailyForecast} {settings} />
+			</div>
+		</div>
+	{:else}
+		<p class="text-center">{$t('common.error.weatherInfo')}</p>
+	{/if}
+</Container>
+
+<Footer dark={isNight} />

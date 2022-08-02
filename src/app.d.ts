@@ -21,6 +21,8 @@ declare global {
 		}
 		// interface Platform {}
 		// interface Session {}
-		// interface Stuff {}
+		interface Stuff {
+			isNight: boolean;
+		}
 	}
 }

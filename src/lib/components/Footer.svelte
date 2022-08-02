@@ -9,7 +9,7 @@
 </script>
 
 <div
-	class="flex justify-between items-center p-4 text-xs {dark
+	class="absolute bottom-0 w-full flex justify-between items-center p-4 text-xs {dark
 		? 'bg-white/20 text-white'
 		: 'bg-blue-500/40'}"
 >

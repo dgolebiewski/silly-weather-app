@@ -1,3 +1,16 @@
+<script context="module" lang="ts">
+	import type { LoadEvent } from '@sveltejs/kit';
+
+	export const load = async ({ props, stuff }: LoadEvent) => {
+		return {
+			props: {
+				...props,
+				isNight: stuff.isNight
+			}
+		};
+	};
+</script>
+
 <script lang="ts">
 	import { t } from '$lib/i18n/translations';
 	import Container from '$lib/components/Container.svelte';
@@ -11,6 +24,7 @@
 	import UnitsControls from '$lib/components/Settings/UnitsControls.svelte';
 
 	export let settings: AppSettings;
+	export let isNight: boolean;
 </script>
 
 <svelte:head>
@@ -19,7 +33,7 @@
 
 <Container>
 	<Header>
-		<LinkButton href="/">
+		<LinkButton href="/" dark={isNight}>
 			<i class="mi-home" />
 		</LinkButton>
 	</Header>
@@ -46,4 +60,4 @@
 	/>
 </Container>
 
-<Footer />
+<Footer dark={isNight} />

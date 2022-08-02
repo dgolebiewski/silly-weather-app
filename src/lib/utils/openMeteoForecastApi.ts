@@ -1,5 +1,6 @@
 import type { LatLng } from '$lib/utils/common';
 import dayjs, { roundToFullHour } from '$lib/utils/dayjs';
+import type { Dayjs } from 'dayjs';
 import type { AppSettings } from './settings';
 import { uvIndexFromShortwaveRadiation } from './uvIndex';
 import type { DailyWeatherItem, HourlyWeatherItem, PrecipitationType } from './weatherItem';
@@ -158,7 +159,9 @@ const fetchForecast = async (
 	latLng: LatLng,
 	daily: string[] | null = null,
 	hourly: string[] | null = null,
-	settings: AppSettings | null = null
+	settings: AppSettings | null = null,
+	startDate: Dayjs | null = null,
+	endDate: Dayjs | null = null
 ): Promise<OpenMeteoResponse | OpenMeteoErrorResponse> => {
 	const params = new URLSearchParams();
 	params.append('latitude', latLng.latitude.toString());
@@ -168,6 +171,10 @@ const fetchForecast = async (
 		params.append('temperature_unit', settings.temperatureUnit);
 		params.append('windspeed_unit', settings.windspeedUnit);
 		params.append('precipitation_unit', settings.precipitationUnit);
+	}
+	if (startDate && endDate) {
+		params.append('start_date', startDate.format(OPEN_METEO_TIME_FORMAT_SHORT));
+		params.append('end_date', endDate.format(OPEN_METEO_TIME_FORMAT_SHORT));
 	}
 
 	let queryString = params.toString();
@@ -227,7 +234,6 @@ export const getWeatherForecast = async (
 	);
 
 	if (isOpenMeteoErrorResponse(forecast) || !forecast.daily || !forecast.hourly) {
-		console.log(forecast);
 		return null;
 	}
 
@@ -262,4 +268,32 @@ export const getWeatherForecast = async (
 		hourlyForecast,
 		dailyForecast
 	};
+};
+
+export const isNightCurrently = async (latLng: LatLng, settings: AppSettings) => {
+	// Must check for this eventuality, because idk if the session will be correctly loaded by this point :)
+	if (!latLng || !settings) {
+		return false;
+	}
+
+	const today = dayjs().hour(0).minute(0).second(0).millisecond(0);
+
+	const forecast = await fetchForecast(
+		latLng,
+		['sunrise', 'sunset'],
+		null,
+		settings,
+		today,
+		today.add(1, 'day')
+	);
+
+	if (isOpenMeteoErrorResponse(forecast) || !forecast.daily || forecast.daily.time.length < 2) {
+		return false;
+	}
+
+	const now = dayjs();
+	const todaySunset = dayjs(`${forecast.daily.sunset[0]}Z`);
+	const tomorrowSunrise = dayjs(`${forecast.daily.sunrise[1]}Z`);
+
+	return now.isAfter(todaySunset) && now.isBefore(tomorrowSunrise);
 };
