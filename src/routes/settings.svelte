@@ -19,7 +19,6 @@
 	import UnitsControls from '$lib/components/Settings/UnitsControls.svelte';
 
 	export let settings: AppSettings;
-	export let isNight: boolean;
 </script>
 
 <svelte:head>

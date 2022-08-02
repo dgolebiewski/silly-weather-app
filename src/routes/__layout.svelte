@@ -50,7 +50,7 @@
 	{/if}
 
 	<Container>
-		<Header>
+		<Header {isNight}>
 			{#if pathname === '/'}
 				<LinkButton href="/settings" dark={isNight}>
 					<i class="mi-settings" />
