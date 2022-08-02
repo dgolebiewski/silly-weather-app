@@ -6,7 +6,9 @@
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { locale } from '$lib/i18n/translations';
 	import { invalidate } from '$app/navigation';
+	import Spinner from './Spinner.svelte';
 
+	export let currentLatLng: LatLng;
 	export let locationInfo: LocationInfo;
 
 	let hasGeolocation = true;
@@ -36,6 +38,11 @@
 			latitude: position.coords.latitude,
 			longitude: position.coords.longitude
 		};
+
+		if (JSON.stringify(currentLatLng) === JSON.stringify(latLng)) {
+			isDetectingLocation = false;
+			return;
+		}
 
 		const locationDataResponse = await fetch(
 			`${import.meta.env.VITE_REVERSE_GEOCODE_URL}?latitude=${latLng.latitude}&longitude=${
@@ -94,12 +101,19 @@
 
 <div class="flex flex-col justify-center items-center">
 	<p>{locationInfo.city}, {locationInfo.countryCode}</p>
-	{#if hasGeolocation}
-		<TextButton on:click={detectLocation} disabled={isDetectingLocation}>
-			<i class="mi-location" />
-			{$t('common.detectLocation.detect')}
-		</TextButton>
-	{/if}
+	<div class="flex items-center justify-center">
+		<span class:mr-2={isDetectingLocation}>
+			{#if hasGeolocation}
+				<TextButton on:click={detectLocation} disabled={isDetectingLocation}>
+					<i class="mi-location" />
+					{$t('common.detectLocation.detect')}
+				</TextButton>
+			{/if}
+		</span>
+		{#if isDetectingLocation}
+			<Spinner size="sm" />
+		{/if}
+	</div>
 </div>
 
 <!-- <p>

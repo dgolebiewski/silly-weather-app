@@ -110,6 +110,7 @@ export const GET: RequestHandler = async ({ clientAddress, locals }: RequestEven
 
 	return {
 		body: {
+			latLng,
 			locationInfo,
 			forecast,
 			settings

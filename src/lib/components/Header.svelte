@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { t } from '$lib/i18n/translations';
-	import type { LocationInfo } from '$lib/utils/common';
+	import type { LatLng, LocationInfo } from '$lib/utils/common';
 	import DetectLocationButton from './DetectLocationButton.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import type { LocationChangeEventPayload } from '$lib/types/events';
@@ -12,6 +12,7 @@
 		locationChange: LocationChangeEventPayload;
 	}>();
 
+	export let latLng: LatLng;
 	export let locationInfo: LocationInfo;
 	export let isNight: boolean;
 	export let settings: AppSettings;
@@ -27,5 +28,9 @@
 		<Settings {settings} />
 	</div>
 	<LocationAutocomplete on:locationChange={onLocationChange} />
-	<DetectLocationButton {locationInfo} on:locationChange={onLocationChange} />
+	<DetectLocationButton
+		currentLatLng={latLng}
+		{locationInfo}
+		on:locationChange={onLocationChange}
+	/>
 </div>

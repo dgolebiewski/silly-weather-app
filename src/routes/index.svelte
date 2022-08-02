@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { browser } from '$app/env';
 	import { t } from '$lib/i18n/translations';
-	import type { LocationInfo } from '$lib/utils/common';
+	import type { LatLng, LocationInfo } from '$lib/utils/common';
 	import type { WeatherForecast } from '$lib/utils/openMeteoForecastApi';
-	import type { LocationChangeEventPayload } from '$lib/types/events';
 	import WeatherCard from '$lib/components/WeatherCard/WeatherCard.svelte';
 	import dayjs, { ONE_HOUR } from '$lib/utils/dayjs';
 	import { invalidate } from '$app/navigation';
@@ -19,6 +18,7 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import { onMount, onDestroy } from 'svelte';
 
+	export let latLng: LatLng;
 	export let locationInfo: LocationInfo;
 	export let forecast: WeatherForecast;
 	export let settings: AppSettings;
@@ -69,7 +69,7 @@
 
 <div class={isNight ? 'bg-slate-700' : 'bg-sky-200'}>
 	<div class="xl:container mx-auto px-4 py-6">
-		<Header {isNight} {locationInfo} {settings} />
+		<Header {latLng} {isNight} {locationInfo} {settings} />
 		{#if weatherCards}
 			<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
 				<WeatherCard city={locationInfo.city} {...weatherCards[0]} />
