@@ -35,6 +35,10 @@
 	import PageTransition from '$lib/components/PageTransition.svelte';
 	import { isNightCurrently } from '$lib/utils/openMeteoForecastApi';
 	import type { SessionData } from 'src/app';
+	import Header from '$lib/components/Header.svelte';
+	import LinkButton from '$lib/components/Input/LinkButton.svelte';
+	import Footer from '$lib/components/Footer.svelte';
+	import Container from '$lib/components/Container.svelte';
 
 	export let pathname: string;
 	export let isNight: boolean;
@@ -44,7 +48,24 @@
 	{#if $navigating}
 		<LoadingBar infinite />
 	{/if}
-	<PageTransition {pathname}>
-		<slot />
-	</PageTransition>
+
+	<Container>
+		<Header>
+			{#if pathname === '/'}
+				<LinkButton href="/settings" dark={isNight}>
+					<i class="mi-settings" />
+				</LinkButton>
+			{:else}
+				<LinkButton href="/" dark={isNight}>
+					<i class="mi-home" />
+				</LinkButton>
+			{/if}
+		</Header>
+
+		<PageTransition {pathname}>
+			<slot />
+		</PageTransition>
+	</Container>
+
+	<Footer dark={isNight} />
 </div>
