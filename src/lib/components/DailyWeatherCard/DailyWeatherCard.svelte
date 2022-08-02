@@ -11,15 +11,13 @@
 </script>
 
 <MultipleDataPointsCard title={$t('common.dailyForecast.title')} className="daily-weather-bg">
-	{#each dailyForecast as { time, temperatureMax, weatherCode, precipitation, precipitationType }, index}
+	{#each dailyForecast as { time, temperatureMax, weatherCode }, index}
 		<div class="flex-grow min-w-[100px] {index < dailyForecast.length ? 'mr-2' : ''}">
 			<WeatherCardSmall
 				timeMode="days"
 				time={dayjs(time)}
 				temperature={temperatureMax}
 				{weatherCode}
-				{precipitation}
-				{precipitationType}
 				{settings}
 				weatherItem={dailyForecast[index]}
 			/>

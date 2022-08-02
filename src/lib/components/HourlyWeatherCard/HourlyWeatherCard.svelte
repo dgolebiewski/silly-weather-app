@@ -17,15 +17,13 @@
 
 <MultipleDataPointsCard title={$t('common.hourlyForecast.title')} className="hourly-weather-bg">
 	<SunriseAndSunset slot="secondaryContent" {sunrise} {sunset} />
-	{#each hourlyForecast as { time, temperature, weatherCode, precipitation, precipitationType }, index}
+	{#each hourlyForecast as { time, temperature, weatherCode }, index}
 		<div class="flex-grow min-w-[100px] {index < hourlyForecast.length ? 'mr-2' : ''}">
 			<WeatherCardSmall
 				time={dayjs(time)}
 				isNight={dayjs(time).isAfter(sunset) && dayjs(time).isBefore(tomorrowSunrise)}
 				{temperature}
 				{weatherCode}
-				{precipitation}
-				{precipitationType}
 				{settings}
 				weatherItem={hourlyForecast[index]}
 			/>

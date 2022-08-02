@@ -1,11 +1,7 @@
 <script lang="ts">
 	import type { AppSettings } from '$lib/utils/settings';
 
-	import type {
-		DailyWeatherItem,
-		HourlyWeatherItem,
-		PrecipitationType
-	} from '$lib/utils/weatherItem';
+	import type { DailyWeatherItem, HourlyWeatherItem } from '$lib/utils/weatherItem';
 	import { getMostRelevantStats } from '$lib/utils/weatherStats';
 
 	import type { Dayjs } from 'dayjs';
@@ -24,12 +20,8 @@
 	export let timeMode: TimeMode = 'hours';
 	export let temperature: number;
 	export let weatherCode: number;
-	export let precipitation: number;
-	export let precipitationType: PrecipitationType;
 	export let weatherItem: HourlyWeatherItem | DailyWeatherItem;
 	export let settings: AppSettings;
-
-	let precipitationIcon: string;
 
 	$: backgroundColor = isNight ? COLOR_NIGHT : COLOR_DAY;
 	$: formattedTime =
@@ -38,13 +30,6 @@
 			: dayjs().diff(time, 'days') < 7
 			? time.format('ddd').toLowerCase()
 			: time.format('MMM DD').toLowerCase();
-	$: {
-		if (precipitationType === 'rain' || precipitationType === 'showers') {
-			precipitationIcon = 'rain';
-		} else {
-			precipitationIcon = 'snow';
-		}
-	}
 
 	$: mostRelevantStat = getMostRelevantStats(weatherItem, settings, 1).primaryStats[0];
 </script>
