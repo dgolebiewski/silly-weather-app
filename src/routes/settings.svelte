@@ -1,16 +1,3 @@
-<script context="module" lang="ts">
-	import type { LoadEvent } from '@sveltejs/kit';
-
-	export const load = async ({ props, stuff }: LoadEvent) => {
-		return {
-			props: {
-				...props,
-				isNight: stuff.isNight
-			}
-		};
-	};
-</script>
-
 <script lang="ts">
 	import { t } from '$lib/i18n/translations';
 	import type { AppSettings } from '$lib/utils/settings';

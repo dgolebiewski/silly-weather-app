@@ -8,7 +8,7 @@
 
 	const dispatch = createEventDispatcher();
 
-	const COLORS_DEFAULT = 'text-blue-600 hover:text-blue-400';
+	const COLORS_DEFAULT = 'text-blue-500 hover:text-blue-600';
 	const COLORS_LIGHT = 'text-grey-200 hover:text-grey-300';
 	const COLORS_DARK = 'text-grey-600 hover:text-grey-500';
 

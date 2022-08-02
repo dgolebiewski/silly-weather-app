@@ -292,8 +292,9 @@ export const isNightCurrently = async (latLng: LatLng, settings: AppSettings) =>
 	}
 
 	const now = dayjs();
+	const todaySunrise = dayjs(`${forecast.daily.sunrise[0]}Z`);
 	const todaySunset = dayjs(`${forecast.daily.sunset[0]}Z`);
 	const tomorrowSunrise = dayjs(`${forecast.daily.sunrise[1]}Z`);
 
-	return now.isAfter(todaySunset) && now.isBefore(tomorrowSunrise);
+	return (now.isAfter(todaySunset) && now.isBefore(tomorrowSunrise)) || now.isBefore(todaySunrise);
 };
