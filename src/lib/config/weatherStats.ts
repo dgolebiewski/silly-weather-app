@@ -27,17 +27,17 @@ export const HOURLY_STATS_TO_EVALUATE: StatResolveItem<HourlyWeatherItem>[] = [
 		}
 	},
 	{
-		key: 'apparentTemperature',
-		icon: 'temperature',
-		getUnit(settings) {
-			return settings.temperatureUnit;
-		}
-	},
-	{
 		key: 'uvIndex',
 		icon: 'sun',
 		shouldBePrimary(value) {
 			return value > 5;
+		}
+	},
+	{
+		key: 'apparentTemperature',
+		icon: 'temperature',
+		getUnit(settings) {
+			return settings.temperatureUnit;
 		}
 	},
 	{
@@ -65,18 +65,18 @@ export const HOURLY_STATS_TO_EVALUATE: StatResolveItem<HourlyWeatherItem>[] = [
 
 export const DAILY_STATS_TO_EVALUATE: StatResolveItem<DailyWeatherItem>[] = [
 	{
-		key: 'temperatureMin',
-		icon: 'moon',
-		getUnit(settings) {
-			return settings.temperatureUnit;
-		}
-	},
-	{
 		key: 'precipitation',
 		getIcon: getPrecipitationIcon,
 		getLabelCode: getPrecipitationLabelCode,
 		getUnit(settings) {
 			return settings.precipitationUnit;
+		}
+	},
+	{
+		key: 'temperatureMin',
+		icon: 'moon',
+		getUnit(settings) {
+			return settings.temperatureUnit;
 		}
 	},
 	{

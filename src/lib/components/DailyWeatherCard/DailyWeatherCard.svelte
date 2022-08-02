@@ -21,6 +21,7 @@
 				{precipitation}
 				{precipitationType}
 				{settings}
+				weatherItem={dailyForecast[index]}
 			/>
 		</div>
 	{/each}

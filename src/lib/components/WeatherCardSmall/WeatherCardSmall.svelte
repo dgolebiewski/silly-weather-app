@@ -1,7 +1,12 @@
 <script lang="ts">
 	import type { AppSettings } from '$lib/utils/settings';
 
-	import type { PrecipitationType } from '$lib/utils/weatherItem';
+	import type {
+		DailyWeatherItem,
+		HourlyWeatherItem,
+		PrecipitationType
+	} from '$lib/utils/weatherItem';
+	import { getMostRelevantStats } from '$lib/utils/weatherStats';
 
 	import type { Dayjs } from 'dayjs';
 	import dayjs from 'dayjs';
@@ -21,6 +26,7 @@
 	export let weatherCode: number;
 	export let precipitation: number;
 	export let precipitationType: PrecipitationType;
+	export let weatherItem: HourlyWeatherItem | DailyWeatherItem;
 	export let settings: AppSettings;
 
 	let precipitationIcon: string;
@@ -39,6 +45,8 @@
 			precipitationIcon = 'snow';
 		}
 	}
+
+	$: mostRelevantStat = getMostRelevantStats(weatherItem, settings, 1).primaryStats[0];
 </script>
 
 <div
@@ -52,5 +60,10 @@
 		<WeatherIconSmall {isNight} {weatherCode} />
 		<Temperature size="small" value={temperature} />
 	</div>
-	<StatCardSmall icon={precipitationIcon} value={precipitation} unit={settings.precipitationUnit} />
+	<StatCardSmall
+		labelCode={mostRelevantStat.labelCode}
+		icon={mostRelevantStat.icon}
+		value={mostRelevantStat.value}
+		unit={mostRelevantStat.unit}
+	/>
 </div>

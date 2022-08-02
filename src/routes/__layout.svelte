@@ -17,6 +17,7 @@
 
 <script>
 	import '../app.css';
+	import 'tippy.js/dist/tippy.css';
 </script>
 
 <slot />

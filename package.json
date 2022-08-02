@@ -37,6 +37,7 @@
 		"svelte-portal": "^2.2.0",
 		"svelte-use-click-outside": "^1.0.0",
 		"sveltekit-i18n": "^2.2.2",
+		"tippy.js": "^6.3.7",
 		"ts-debounce": "^4.0.0"
 	}
 }

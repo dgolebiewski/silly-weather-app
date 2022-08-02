@@ -27,6 +27,7 @@
 				{precipitation}
 				{precipitationType}
 				{settings}
+				weatherItem={hourlyForecast[index]}
 			/>
 		</div>
 	{/each}
