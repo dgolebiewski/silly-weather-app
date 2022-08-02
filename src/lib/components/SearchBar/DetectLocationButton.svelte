@@ -2,11 +2,10 @@
 	import type { LatLng, LocationInfo } from '$lib/utils/common';
 	import type { LocationChangeEventPayload } from '$lib/types/events';
 	import { t } from '$lib/i18n/translations';
-	import TextButton from '$lib/components/TextButton.svelte';
+	import TextButton from '$lib/components/Input/TextButton.svelte';
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { locale } from '$lib/i18n/translations';
-	import { invalidate } from '$app/navigation';
-	import Spinner from './Spinner.svelte';
+	import Spinner from '../Spinner.svelte';
 
 	export let currentLatLng: LatLng;
 	export let locationInfo: LocationInfo;
@@ -56,18 +55,6 @@
 			city: locationData.city || locationData.locality,
 			countryCode: locationData.countryCode
 		};
-
-		const response = await fetch(`/location`, {
-			method: 'POST',
-			body: JSON.stringify({
-				latLng,
-				locationInfo
-			})
-		});
-
-		if (response.status === 200) {
-			await invalidate('/');
-		}
 
 		dispatch('locationChange', {
 			latLng,

@@ -17,6 +17,10 @@
 	import type { AppSettings } from '$lib/utils/settings';
 	import Footer from '$lib/components/Footer.svelte';
 	import { onMount, onDestroy } from 'svelte';
+	import SearchBar from '$lib/components/SearchBar/SearchBar.svelte';
+	import Settings from '$lib/components/Settings/Settings.svelte';
+	import LinkButton from '$lib/components/Input/LinkButton.svelte';
+	import Container from '$lib/components/Container.svelte';
 
 	export let latLng: LatLng;
 	export let locationInfo: LocationInfo;
@@ -68,8 +72,13 @@
 </svelte:head>
 
 <div class={isNight ? 'bg-slate-700' : 'bg-sky-200'}>
-	<div class="xl:container mx-auto px-4 py-6">
-		<Header {latLng} {isNight} {locationInfo} {settings} />
+	<Container>
+		<Header {isNight}>
+			<LinkButton href="/settings" dark={isNight}>
+				<i class="mi-settings" />
+			</LinkButton>
+		</Header>
+		<SearchBar {latLng} {locationInfo} {isNight} />
 		{#if weatherCards}
 			<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
 				<WeatherCard city={locationInfo.city} {...weatherCards[0]} />
@@ -104,7 +113,7 @@
 		{:else}
 			<p class="text-center">{$t('common.error.weatherInfo')}</p>
 		{/if}
-	</div>
+	</Container>
 
 	<Footer dark={isNight} />
 </div>

@@ -1,3 +1,5 @@
+import type { LocationInfo } from './common';
+
 export type CommonUnit = 'metric' | 'imperial' | 'custom';
 export type TemperatureUnit = 'celsius' | 'fahrenheit';
 export type WindspeedUnit = 'kmh' | 'mph' | 'kn';
@@ -15,7 +17,7 @@ export const TEMPERATURE_UNIT_OPTIONS = ['celsius', 'fahrenheit'];
 export const WINDSPEED_UNIT_OPTIONS = ['kmh', 'mph', 'kn'];
 export const PRECIPITATION_UNIT_OPTIONS = ['mm', 'inch'];
 
-export const getDefaultSettings = (locale?: string) => {
+export const getDefaultSettings = (locale?: string): AppSettings => {
 	return {
 		temperatureUnit: 'celsius',
 		windspeedUnit: 'kmh',
@@ -58,4 +60,26 @@ export const validateSettings = (settings: any): settings is AppSettings => {
 		WINDSPEED_UNIT_OPTIONS.includes(settings.windspeedUnit) &&
 		PRECIPITATION_UNIT_OPTIONS.includes(settings.precipitationUnit)
 	);
+};
+
+export const resolveSettings = async (
+	locals: App.Locals,
+	locationInfo: LocationInfo,
+	locales: string[]
+): Promise<AppSettings> => {
+	let settings = locals.session.data.settings;
+
+	if (!settings || !validateSettings(settings)) {
+		settings = getDefaultSettings(
+			locales.includes(locationInfo.countryCode.toLowerCase())
+				? locationInfo.countryCode.toLowerCase()
+				: 'en'
+		);
+		await locals.session.set({
+			...locals.session.data,
+			settings
+		});
+	}
+
+	return settings;
 };

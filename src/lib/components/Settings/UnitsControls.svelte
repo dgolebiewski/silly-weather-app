@@ -14,7 +14,8 @@
 	import { t } from '$lib/i18n/translations';
 	import FormRow from '../Input/FormRow.svelte';
 	import SelectInput from '../Input/SelectInput.svelte';
-	import { onMount, tick } from 'svelte';
+	import { tick } from 'svelte';
+	import SaveButton from './SaveButton.svelte';
 
 	export let settings: AppSettings;
 
@@ -92,3 +93,5 @@
 		bind:value={precipitationUnit}
 	/>
 </FormRow>
+
+<SaveButton {settings} />

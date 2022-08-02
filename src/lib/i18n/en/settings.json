@@ -1,0 +1,28 @@
+{
+  "title": "settings",
+	"save": "save",
+	"general": {
+		"title": "general",
+		"languageTitle": "language",
+		"language": {
+			"en": "english"
+		}
+	},
+  "units": {
+    "title": "units",
+    "units": "units",
+		"metric": "metric",
+		"imperial": "imperial",
+		"custom": "custom",
+		"temperatureUnit": "temperature unit",
+		"celsius": "C",
+		"fahrenheit": "F",
+		"windspeedUnit": "wind speed unit",
+		"kmh": "km/h",
+		"mph": "mp/h",
+		"kn": "kn",
+		"precipitationUnit": "precipitation unit",
+		"inch": "inch",
+		"mm": "mm"
+  }
+}

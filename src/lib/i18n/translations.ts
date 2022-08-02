@@ -7,6 +7,12 @@ const config: Config = {
 			locale: 'en',
 			key: 'common',
 			loader: async () => (await import('./en/common.json')).default
+		},
+		{
+			locale: 'en',
+			key: 'settings',
+			loader: async () => (await import('./en/settings.json')).default,
+			routes: ['/settings']
 		}
 	]
 };

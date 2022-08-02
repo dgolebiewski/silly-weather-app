@@ -5,7 +5,7 @@
 	import { t } from '$lib/i18n/translations';
 	import Button from '$lib/components/Input/Button.svelte';
 	import Modal from '$lib/components/Modal/Modal.svelte';
-	import Controls from './Controls.svelte';
+	import Controls from './UnitsControls.svelte';
 
 	let open: boolean = false;
 	let isSaving: boolean = false;

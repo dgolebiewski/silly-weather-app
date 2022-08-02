@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { t } from '$lib/i18n/translations';
 	import Modal from './Modal/Modal.svelte';
-	import TextButton from './TextButton.svelte';
+	import TextButton from './Input/TextButton.svelte';
 
 	export let dark: boolean = false;
 
@@ -11,7 +11,7 @@
 <div
 	class="flex justify-between items-center p-4 text-xs {dark
 		? 'bg-white/20 text-white'
-		: 'bg-black/20'}"
+		: 'bg-blue-500/40'}"
 >
 	<p class="opacity-60">
 		{$t('common.footer.author')}
