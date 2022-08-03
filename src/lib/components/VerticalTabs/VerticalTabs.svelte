@@ -19,12 +19,12 @@
 	};
 </script>
 
-<div class="flex items-start py-6">
+<div class="md:flex items-start py-6">
 	<Navigation {tabs} {activeTab} on:selectTab={handleSelectTab} />
-	<div class="flex-grow">
+	<div class="flex-grow mt-4 md:mt-0">
 		{#key activeTab}
 			<div
-				class="pl-8"
+				class="md:pl-8"
 				in:fly={{
 					y: TRANSITION_DISTANCE,
 					duration: TRANSITION_DURATION,

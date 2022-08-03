@@ -16,7 +16,7 @@
 </script>
 
 <button
-	class="px-3 py-2 w-64 rounded-md hover:bg-slate-500/20 transition-colors {active
+	class="px-3 py-2 w-full md:w-64 rounded-md hover:bg-slate-500/20 transition-colors {active
 		? 'bg-sky-500/20'
 		: ''}"
 	on:click={handleClick}

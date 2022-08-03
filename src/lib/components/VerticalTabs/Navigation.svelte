@@ -15,7 +15,7 @@
 	};
 </script>
 
-<div class="flex flex-col pr-4 border-r">
+<div class="flex flex-col pb-4 border-b md:pb-0 md:pr-4 md:border-r md:border-b-0">
 	{#each tabs as tab, index}
 		<NavigationItem {tab} id={index} active={activeTab === index} on:selectTab={handleSelectTab} />
 	{/each}
