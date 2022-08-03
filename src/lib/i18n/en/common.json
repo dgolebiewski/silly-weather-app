@@ -118,6 +118,8 @@
 		"notes": "notes"
 	},
 	"error": {
-		"weatherInfo": "sorry, we could not get weather info"
+		"weatherInfo": "sorry, we could not get weather info",
+		"404": "page not found",
+		"other": "an error occured"
 	}
 }

@@ -118,6 +118,8 @@
 		"notes": "uwagi"
 	},
 	"error": {
-		"weatherInfo": "sorry, nie mogliśmy pobrać pogody"
+		"weatherInfo": "sorry, nie mogliśmy pobrać pogody",
+		"404": "nie znaleziono",
+		"other": "wystąpił błąd"
 	}
 }
