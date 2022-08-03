@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { t } from '$lib/i18n/translations';
+	import { tippy } from '$lib/actions/tippy';
 
 	export let icon: string;
 	export let label: string;
@@ -10,7 +11,12 @@
 <div class="flex flex-col items-center justify-center">
 	<div class="flex justify-center items-center">
 		<i class="mi-{icon} mr-1" />
-		<h4 class="font-medium text-sm md:text-base">{$t(`common.weatherStat.${label}.short`)}</h4>
+		<h4
+			class="font-medium text-sm md:text-base cursor-help"
+			use:tippy={{ content: $t(`common.weatherStat.${label}.default`) }}
+		>
+			{$t(`common.weatherStat.${label}.short`)}
+		</h4>
 	</div>
 
 	<div class="flex justify-center items-end">
