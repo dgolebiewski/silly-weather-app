@@ -8,7 +8,8 @@
 
 		const _session = session as SessionData;
 
-		const initLocale = locale.get() || _session.settings.language;
+		const initLocale = _session.settings.language || locale.get() || 'en';
+		locale.set(initLocale);
 
 		await loadTranslations(initLocale, pathname);
 
