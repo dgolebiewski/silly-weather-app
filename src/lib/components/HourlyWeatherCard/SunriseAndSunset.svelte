@@ -7,7 +7,17 @@
 </script>
 
 <div class="flex items-center">
-	<TimeWithIcon icon="sunrise" iconClass="text-yellow-300" time={sunrise} />
+	<TimeWithIcon
+		icon="sunrise"
+		iconClass="text-yellow-300"
+		time={sunrise}
+		labelCode="common.hourlyForecast.sunrise"
+	/>
 	<div class="w-8" />
-	<TimeWithIcon icon="sunset" iconClass="text-orange-500" time={sunset} />
+	<TimeWithIcon
+		icon="sunset"
+		iconClass="text-orange-500"
+		time={sunset}
+		labelCode="common.hourlyForecast.sunset"
+	/>
 </div>

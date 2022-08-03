@@ -79,7 +79,9 @@
 		"detect": "wykryj lokalizację"
 	},
 	"hourlyForecast": {
-		"title": "co godzinę"
+		"title": "co godzinę",
+		"sunrise": "wschód słońca",
+		"sunset": "zachód słońca"
 	},
 	"dailyForecast": {
 		"title": "kilka następnych dni"
