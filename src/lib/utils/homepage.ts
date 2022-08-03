@@ -100,3 +100,33 @@ export const getWeatherPoints = (
 		];
 	}
 };
+
+export type HomepageTitleData = {
+	labelCode: string;
+	params: Record<string, string>;
+};
+
+export const getHomepageTitle = (
+	currentWeather: HourlyWeatherItem,
+	nightForecast: HourlyWeatherItem,
+	tomorrowForecast: DailyWeatherItem,
+	isNight: boolean
+): HomepageTitleData => {
+	if (isNight) {
+		return {
+			labelCode: 'homepage.title.night',
+			params: {
+				now: currentWeather.temperature.toString(),
+				tomorrow: tomorrowForecast.temperatureMax.toString()
+			}
+		};
+	}
+
+	return {
+		labelCode: 'homepage.title.day',
+		params: {
+			now: currentWeather.temperature.toString(),
+			night: nightForecast.temperature.toString()
+		}
+	};
+};

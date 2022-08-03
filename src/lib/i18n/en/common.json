@@ -102,25 +102,6 @@
 			"error": "this shouldn't be here... contact the author"
 		}
 	},
-	"settings": {
-		"title": "settings",
-		"units": "units",
-		"metric": "metric",
-		"imperial": "imperial",
-		"custom": "custom",
-		"temperatureUnit": "temperature unit",
-		"celsius": "C",
-		"fahrenheit": "F",
-		"windspeedUnit": "wind speed unit",
-		"kmh": "km/h",
-		"mph": "mp/h",
-		"kn": "kn",
-		"precipitationUnit": "precipitation unit",
-		"inch": "inch",
-		"mm": "mm",
-		"save": "save",
-		"cancel": "cancel"
-	},
 	"units": {
 		"celsius": "C",
 		"fahrenheit": "F",

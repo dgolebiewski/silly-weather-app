@@ -21,7 +21,7 @@
 	import { invalidate } from '$app/navigation';
 	import { getMostRelevantStats } from '$lib/utils/weatherStats';
 	import StatCard from '$lib/components/StatCard/StatCard.svelte';
-	import { getWeatherPoints } from '$lib/utils/homepage';
+	import { getHomepageTitle, getWeatherPoints } from '$lib/utils/homepage';
 	import HourlyWeatherCard from '$lib/components/HourlyWeatherCard/HourlyWeatherCard.svelte';
 	import DailyWeatherCard from '$lib/components/DailyWeatherCard/DailyWeatherCard.svelte';
 	import WeatherCluesCard from '$lib/components/WeatherCluesCard/WeatherCluesCard.svelte';
@@ -42,6 +42,7 @@
 	$: currentWeatherStats = currentWeather
 		? getMostRelevantStats(currentWeather, settings, 3, 3)
 		: null;
+	$: nightWeather = forecast.nightWeather;
 	$: todayForecast = forecast.todayForecast;
 	$: tomorrowForecast = forecast.tomorrowForecast;
 	$: hourlyForecast = forecast.hourlyForecast.filter(
@@ -52,6 +53,10 @@
 	$: dailyForecast = forecast.dailyForecast.filter((item) =>
 		dayjs(item.time).isAfter(dayjs().tz('UTC'))
 	);
+	$: title =
+		currentWeather && nightWeather && tomorrowForecast
+			? getHomepageTitle(currentWeather, nightWeather, tomorrowForecast, isNight)
+			: { labelCode: 'common.title', params: {} };
 
 	onMount(() => {
 		invalidateRouteRoutine = setInterval(() => {
@@ -67,13 +72,7 @@
 </script>
 
 <svelte:head>
-	<title
-		>{browser && currentWeather && tomorrowForecast
-			? `${currentWeather.temperature}° now | ${tomorrowForecast.temperatureMax} tomorrow | ${$t(
-					'common.title'
-			  )}`
-			: $t('common.title')}</title
-	>
+	<title>{$t(title.labelCode, title.params)}</title>
 </svelte:head>
 
 <SearchBar {latLng} {locationInfo} {isNight} />

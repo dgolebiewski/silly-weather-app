@@ -1,0 +1,6 @@
+{
+	"title": {
+		"night": "{{now}}° now | {{tomorrow}}° tomorrow | silly weather app",
+		"day": "{{now}}° now | {{night}}° at night | silly weather app"
+	}
+}

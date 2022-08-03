@@ -10,6 +10,12 @@ const config: Config = {
 		},
 		{
 			locale: 'en',
+			key: 'homepage',
+			loader: async () => (await import('./en/homepage.json')).default,
+			routes: ['/']
+		},
+		{
+			locale: 'en',
 			key: 'settings',
 			loader: async () => (await import('./en/settings.json')).default,
 			routes: ['/settings']

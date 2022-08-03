@@ -61,34 +61,34 @@
 	}
 </script>
 
-<FormRow label={$t('common.settings.units')} inputId="units">
+<FormRow label={$t('settings.units.units')} inputId="units">
 	<SelectInput
 		id="units"
-		translationBase="common.settings"
+		translationBase="settings.units"
 		options={UNITS_OPTIONS}
 		bind:value={units}
 	/>
 </FormRow>
-<FormRow label={$t('common.settings.temperatureUnit')} inputId="temperatureUnit">
+<FormRow label={$t('settings.units.temperatureUnit')} inputId="temperatureUnit">
 	<SelectInput
 		id="temperatureUnits"
-		translationBase="common.settings"
+		translationBase="settings.units"
 		options={TEMPERATURE_UNIT_OPTIONS}
 		bind:value={temperatureUnit}
 	/>
 </FormRow>
-<FormRow label={$t('common.settings.windspeedUnit')} inputId="windspeedUnit">
+<FormRow label={$t('settings.units.windspeedUnit')} inputId="windspeedUnit">
 	<SelectInput
 		id="windspeedUnit"
-		translationBase="common.settings"
+		translationBase="settings.units"
 		options={WINDSPEED_UNIT_OPTIONS}
 		bind:value={windspeedUnit}
 	/>
 </FormRow>
-<FormRow label={$t('common.settings.precipitationUnit')} inputId="precipitationUnit">
+<FormRow label={$t('settings.units.precipitationUnit')} inputId="precipitationUnit">
 	<SelectInput
 		id="precipitationUnit"
-		translationBase="common.settings"
+		translationBase="settings.units"
 		options={PRECIPITATION_UNIT_OPTIONS}
 		bind:value={precipitationUnit}
 	/>
