@@ -2,6 +2,7 @@
 	type SpinnerSize = 'sm' | 'lg';
 
 	export let size: SpinnerSize = 'lg';
+	export let className: string = '';
 
 	const CLASSES_SM = 'w-3 h-3';
 	const CLASSES_LG = 'w-8 h-8';
@@ -20,7 +21,7 @@
 	}
 </script>
 
-<div role="status">
+<div class={className} role="status">
 	<div class="{sizeClasses} rounded-full border-b border-b-blue-600 animate-spin" />
 	<span class="sr-only">Loading...</span>
 </div>

@@ -51,7 +51,7 @@
 
 <div class="flex items-center justify-end mt-8">
 	{#if isSaving}
-		<Spinner />
+		<Spinner className="mr-2" />
 	{/if}
 	<Button variant="primary" disabled={!dirty || isSaving} on:click={saveSettings}>
 		{$t('settings.save')}

@@ -79,7 +79,7 @@
 			bind:value={search}
 		/>
 		{#if searchResultsOpen}
-			<div class="absolute w-96 top-[42px] bg-white rounded-b-md">
+			<div class="absolute w-64 md:w-96 top-[42px] bg-white rounded-b-md">
 				{#if isSearching}
 					<div class="px-4 py-2 flex justify-center items-center">
 						<Spinner />

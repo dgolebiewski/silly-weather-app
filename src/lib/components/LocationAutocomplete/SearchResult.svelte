@@ -17,12 +17,12 @@
 
 <div>
 	<button
-		class="flex flex-col text-left w-96 px-4 py-2 hover:bg-gray-200 z-50 {isLastResult
+		class="flex flex-col text-left whitespace-nowrap text-ellipsis overflow-hidden w-64 md:w-96 px-4 py-2 hover:bg-gray-200 z-50 {isLastResult
 			? 'rounded-b-md'
 			: ''}"
 		on:click={handleSelectLocation}
 	>
 		<span>{searchResult.name}, {searchResult.country}</span>
-		<span class="text-gray-500 text-xs">{searchResult.adminRegion}</span>
+		<span class="text-gray-500 text-xs block w-100 text-ellipsis">{searchResult.adminRegion}</span>
 	</button>
 </div>
