@@ -1,3 +1,6 @@
+import { locales } from '$lib/i18n/translations';
+import { resolveLocation } from '$lib/utils/location';
+import { resolveSettings } from '$lib/utils/settings';
 import type { RequestEvent } from '@sveltejs/kit';
 import { handleSession } from 'svelte-kit-cookie-session';
 
@@ -7,6 +10,15 @@ export async function getSession({ locals }: RequestEvent) {
 }
 
 // You can do it like this, without passing a own handle function
-export const handle = handleSession({
-	secret: 'fL3UgbAWjYCWsMcNUqRXndAf3PuaWlE8'
-});
+export const handle = handleSession(
+	{
+		secret: 'fL3UgbAWjYCWsMcNUqRXndAf3PuaWlE8'
+	},
+	async ({ event, resolve }) => {
+		const { locationInfo } = await resolveLocation(event.locals, event.clientAddress);
+
+		await resolveSettings(event.locals, locationInfo, locales.get());
+
+		return await resolve(event);
+	}
+);

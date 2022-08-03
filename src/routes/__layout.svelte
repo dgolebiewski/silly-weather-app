@@ -6,15 +6,13 @@
 	export const load = async ({ url, session }: LoadEvent) => {
 		const { pathname } = url;
 
-		const defaultLocale = 'en';
+		const _session = session as SessionData;
 
-		const initLocale = locale.get() || defaultLocale;
+		const initLocale = locale.get() || _session.settings.language;
 
 		await loadTranslations(initLocale, pathname);
 
-		const isNight = session
-			? await isNightCurrently((session as SessionData).latLng, (session as SessionData).settings)
-			: false;
+		const isNight = session ? await isNightCurrently(_session.latLng, _session.settings) : false;
 
 		return {
 			stuff: {

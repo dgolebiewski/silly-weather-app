@@ -1,4 +1,4 @@
-import { locale, locales } from '$lib/i18n/translations';
+import { locales } from '$lib/i18n/translations';
 import { resolveLocation } from '$lib/utils/location';
 import { getWeatherForecast } from '$lib/utils/openMeteoForecastApi';
 import { resolveSettings } from '$lib/utils/settings';
@@ -8,7 +8,6 @@ export const GET: RequestHandler = async ({ clientAddress, locals }: RequestEven
 	const { latLng, locationInfo } = await resolveLocation(locals, clientAddress);
 
 	const settings = await resolveSettings(locals, locationInfo, locales.get());
-	locale.set(settings.language);
 
 	const forecast = await getWeatherForecast(latLng, settings);
 
