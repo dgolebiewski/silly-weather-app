@@ -116,8 +116,8 @@ export const getHomepageTitle = (
 		return {
 			labelCode: 'homepage.title.night',
 			params: {
-				now: currentWeather.temperature.toString(),
-				tomorrow: tomorrowForecast.temperatureMax.toString()
+				now: Math.round(currentWeather.temperature).toString(),
+				tomorrow: Math.round(tomorrowForecast.temperatureMax).toString()
 			}
 		};
 	}
@@ -125,8 +125,8 @@ export const getHomepageTitle = (
 	return {
 		labelCode: 'homepage.title.day',
 		params: {
-			now: currentWeather.temperature.toString(),
-			night: nightForecast.temperature.toString()
+			now: Math.round(currentWeather.temperature).toString(),
+			night: Math.round(nightForecast.temperature).toString()
 		}
 	};
 };
