@@ -155,14 +155,24 @@ const transformDailyWeather = (
 	});
 };
 
+type FetchFunction = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+
+type FetchForecastOptions = {
+	daily?: string[];
+	hourly?: string[];
+	startDate?: Dayjs;
+	endDate?: Dayjs;
+	settings?: AppSettings;
+	fetch?: FetchFunction;
+};
+
 const fetchForecast = async (
 	latLng: LatLng,
-	daily: string[] | null = null,
-	hourly: string[] | null = null,
-	settings: AppSettings | null = null,
-	startDate: Dayjs | null = null,
-	endDate: Dayjs | null = null
+	options: FetchForecastOptions
 ): Promise<OpenMeteoResponse | OpenMeteoErrorResponse> => {
+	const { daily, hourly, startDate, endDate, settings } = options;
+	const _fetch = options.fetch || fetch;
+
 	const params = new URLSearchParams();
 	params.append('latitude', latLng.latitude.toString());
 	params.append('longitude', latLng.longitude.toString());
@@ -187,7 +197,7 @@ const fetchForecast = async (
 		queryString += `&hourly=${hourly.join(',')}`;
 	}
 
-	const response = await fetch(`${import.meta.env.VITE_OPEN_METEO_FORECAST_URL}?${queryString}`);
+	const response = await _fetch(`${import.meta.env.VITE_OPEN_METEO_FORECAST_URL}?${queryString}`);
 
 	return (await response.json()) as OpenMeteoResponse | OpenMeteoErrorResponse;
 };
@@ -202,11 +212,11 @@ export type WeatherForecast = {
 };
 export const getWeatherForecast = async (
 	latLng: LatLng,
-	settings: AppSettings
+	settings: AppSettings,
+	fetch?: FetchFunction
 ): Promise<WeatherForecast | null> => {
-	const forecast = await fetchForecast(
-		latLng,
-		[
+	const forecast = await fetchForecast(latLng, {
+		daily: [
 			'temperature_2m_max',
 			'temperature_2m_min',
 			'apparent_temperature_max',
@@ -218,7 +228,7 @@ export const getWeatherForecast = async (
 			'sunset',
 			'windspeed_10m_max'
 		],
-		[
+		hourly: [
 			'temperature_2m',
 			'relativehumidity_2m',
 			'snowfall',
@@ -230,8 +240,9 @@ export const getWeatherForecast = async (
 			'apparent_temperature',
 			'surface_pressure'
 		],
-		settings
-	);
+		settings,
+		fetch
+	});
 
 	if (isOpenMeteoErrorResponse(forecast) || !forecast.daily || !forecast.hourly) {
 		return null;
@@ -270,7 +281,11 @@ export const getWeatherForecast = async (
 	};
 };
 
-export const isNightCurrently = async (latLng: LatLng, settings: AppSettings) => {
+export const isNightCurrently = async (
+	latLng: LatLng,
+	settings: AppSettings,
+	fetch?: FetchFunction
+) => {
 	// Must check for this eventuality, because idk if the session will be correctly loaded by this point :)
 	if (!latLng || !settings) {
 		return false;
@@ -278,14 +293,13 @@ export const isNightCurrently = async (latLng: LatLng, settings: AppSettings) =>
 
 	const today = dayjs().hour(0).minute(0).second(0).millisecond(0);
 
-	const forecast = await fetchForecast(
-		latLng,
-		['sunrise', 'sunset'],
-		null,
+	const forecast = await fetchForecast(latLng, {
+		daily: ['sunrise', 'sunset'],
 		settings,
-		today,
-		today.add(1, 'day')
-	);
+		startDate: today,
+		endDate: today.add(1, 'day'),
+		fetch
+	});
 
 	if (isOpenMeteoErrorResponse(forecast) || !forecast.daily || forecast.daily.time.length < 2) {
 		return false;

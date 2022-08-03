@@ -2,8 +2,9 @@
 	import { navigating } from '$app/stores';
 	import { locale, loadTranslations } from '$lib/i18n/translations';
 	import type { LoadEvent } from '@sveltejs/kit';
+	import { isNightCurrently } from '$lib/utils/openMeteoForecastApi';
 
-	export const load = async ({ url, session }: LoadEvent) => {
+	export const load = async ({ url, session, fetch }: LoadEvent) => {
 		const { pathname } = url;
 
 		const _session = session as SessionData;
@@ -13,7 +14,9 @@
 
 		await loadTranslations(initLocale, pathname);
 
-		const isNight = session ? await isNightCurrently(_session.latLng, _session.settings) : false;
+		const isNight = session
+			? await isNightCurrently(_session.latLng, _session.settings, fetch)
+			: false;
 
 		return {
 			stuff: {
@@ -32,7 +35,6 @@
 	import 'tippy.js/dist/tippy.css';
 	import LoadingBar from '$lib/components/LoadingBar.svelte';
 	import PageTransition from '$lib/components/PageTransition.svelte';
-	import { isNightCurrently } from '$lib/utils/openMeteoForecastApi';
 	import type { SessionData } from 'src/app';
 	import Header from '$lib/components/Header.svelte';
 	import LinkButton from '$lib/components/Input/LinkButton.svelte';
