@@ -3,6 +3,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import isTomorrow from 'dayjs/plugin/isTomorrow';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
+import 'dayjs/locale/pl';
 
 dayjs.extend(customParseFormat);
 dayjs.extend(isTomorrow);

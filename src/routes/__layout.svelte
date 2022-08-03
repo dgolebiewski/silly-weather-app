@@ -1,15 +1,24 @@
 <script context="module" lang="ts">
 	import { navigating } from '$app/stores';
+	import { browser } from '$app/env';
 	import { locale, loadTranslations } from '$lib/i18n/translations';
 	import type { LoadEvent } from '@sveltejs/kit';
 	import { isNightCurrently } from '$lib/utils/openMeteoForecastApi';
+
+	type SettingsResponseBody = {
+		settings: AppSettings;
+	};
 
 	export const load = async ({ url, session, fetch }: LoadEvent) => {
 		const { pathname } = url;
 
 		const _session = session as SessionData;
 
-		const initLocale = _session.settings.language || locale.get() || 'en';
+		let settings = _session.settings;
+
+		const initLocale = browser
+			? locale.get() || settings.language || 'en'
+			: settings.language || 'en';
 		locale.set(initLocale);
 
 		await loadTranslations(initLocale, pathname);
@@ -18,7 +27,7 @@
 
 		if (session) {
 			try {
-				isNight = await isNightCurrently(_session.latLng, _session.settings, fetch as any);
+				isNight = await isNightCurrently(_session.latLng, settings, fetch as any);
 			} catch (e) {}
 		}
 
@@ -44,6 +53,7 @@
 	import LinkButton from '$lib/components/Input/LinkButton.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import Container from '$lib/components/Container.svelte';
+	import type { AppSettings } from '$lib/utils/settings';
 
 	export let pathname: string;
 	export let isNight: boolean;

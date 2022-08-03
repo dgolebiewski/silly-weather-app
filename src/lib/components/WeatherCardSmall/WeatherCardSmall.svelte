@@ -5,6 +5,7 @@
 	import { getMostRelevantStats } from '$lib/utils/weatherStats';
 
 	import type { Dayjs } from 'dayjs';
+	import { locale } from '$lib/i18n/translations';
 	import dayjs from 'dayjs';
 	import Temperature from '../Temperature.svelte';
 	import StatCardSmall from './StatCardSmall.svelte';
@@ -28,7 +29,7 @@
 		timeMode === 'hours'
 			? time.format('HH:mm')
 			: dayjs().diff(time, 'days') < 7
-			? time.format('ddd').toLowerCase()
+			? time.locale(locale.get()).format('ddd').toLowerCase()
 			: time.format('MMM DD').toLowerCase();
 
 	$: mostRelevantStat = getMostRelevantStats(weatherItem, settings, 1).primaryStats[0];
