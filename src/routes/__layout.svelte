@@ -14,9 +14,13 @@
 
 		await loadTranslations(initLocale, pathname);
 
-		const isNight = session
-			? await isNightCurrently(_session.latLng, _session.settings, fetch)
-			: false;
+		let isNight = false;
+
+		if (session) {
+			try {
+				isNight = await isNightCurrently(_session.latLng, _session.settings, fetch as any);
+			} catch (e) {}
+		}
 
 		return {
 			stuff: {

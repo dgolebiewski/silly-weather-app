@@ -15,9 +15,11 @@ export const handle = handleSession(
 		secret: 'fL3UgbAWjYCWsMcNUqRXndAf3PuaWlE8'
 	},
 	async ({ event, resolve }) => {
-		const { locationInfo } = await resolveLocation(event.locals, event.clientAddress);
+		if (event.request.method === 'GET') {
+			const { locationInfo } = await resolveLocation(event.locals, event.clientAddress);
 
-		await resolveSettings(event.locals, locationInfo, locales.get());
+			await resolveSettings(event.locals, locationInfo, locales.get());
+		}
 
 		return await resolve(event);
 	}

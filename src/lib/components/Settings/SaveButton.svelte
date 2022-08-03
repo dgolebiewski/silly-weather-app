@@ -31,6 +31,8 @@
 
 			await invalidate('/');
 			await invalidate('/settings');
+		} else {
+			settings = JSON.parse(initialSettings);
 		}
 
 		isSaving = false;
