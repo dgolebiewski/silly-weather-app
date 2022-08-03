@@ -1,26 +1,11 @@
 import i18n from 'sveltekit-i18n';
 import type { Config } from 'sveltekit-i18n';
+import { createLoaders } from './loaders';
+
+const KEYS = ['common', 'homepage', 'settings'];
 
 const config: Config = {
-	loaders: [
-		{
-			locale: 'en',
-			key: 'common',
-			loader: async () => (await import('./en/common.json')).default
-		},
-		{
-			locale: 'en',
-			key: 'homepage',
-			loader: async () => (await import('./en/homepage.json')).default,
-			routes: ['/']
-		},
-		{
-			locale: 'en',
-			key: 'settings',
-			loader: async () => (await import('./en/settings.json')).default,
-			routes: ['/settings']
-		}
-	]
+	loaders: [...createLoaders('en', KEYS), ...createLoaders('pl', KEYS)]
 };
 
 export const { t, locale, locales, loading, loadTranslations } = new i18n(config);

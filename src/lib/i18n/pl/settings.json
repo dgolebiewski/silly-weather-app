@@ -1,0 +1,29 @@
+{
+  "title": "ustawienia",
+	"save": "zapisz",
+	"general": {
+		"title": "ogólne",
+		"languageTitle": "język",
+		"language": {
+			"en": "english",
+			"pl": "polski"
+		}
+	},
+  "units": {
+    "title": "jednostki",
+    "units": "jednostki",
+		"metric": "metryczne",
+		"imperial": "imperialne",
+		"custom": "własne",
+		"temperatureUnit": "jednostka temperatury",
+		"celsius": "C",
+		"fahrenheit": "F",
+		"windspeedUnit": "jednostka prędkości wiatru",
+		"kmh": "km/h",
+		"mph": "mp/h",
+		"kn": "kn",
+		"precipitationUnit": "jednostka opadów",
+		"inch": "cal",
+		"mm": "mm"
+  }
+}

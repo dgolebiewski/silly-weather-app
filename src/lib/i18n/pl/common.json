@@ -1,0 +1,123 @@
+{
+	"title": "silly weather app",
+	"weatherCard": {
+		"time": {
+			"now": "teraz",
+			"night": "noc",
+			"tomorrow": "jutro",
+			"tomorrowNight": "jutro w nocy"
+		}
+	},
+	"weatherStat": {
+		"apparentTemperature": {
+			"short": "odczuwalna",
+			"default": "temperatura odczuwalna"
+		},
+		"temperatureMin": {
+			"short": "temp. min.",
+			"default": "temperatura minimalna"
+		},
+		"uvIndex": {
+			"short": "indeks uv",
+			"default": "indeks uv"
+		},
+		"windSpeed": {
+			"short": "wiatr",
+			"default": "prędkość wiatru"
+		},
+		"surfacePressure": {
+			"short": "ciśnienie",
+			"default": "ciśnienie atm."
+		},
+		"rain": {
+			"short": "deszcz",
+			"default": "deszcz"
+		},
+		"showers": {
+			"short": "ulewy",
+			"default": "ulewy"
+		},
+		"snow": {
+			"short": "śnieg",
+			"default": "śnieg"
+		},
+		"humidity": {
+			"short": "wilgotność",
+			"default": "wilgotność"
+		}
+	},
+	"weatherIconAlt": {
+		"clearDay": "słońce",
+		"clearNight": "księżyc",
+		"slightlyCloudy": "słońce i pare chmur",
+		"slightlyCloudyNigth": "księżyc i pare chmur",
+		"cloudy": "słońce i chmury",
+		"cloudyNight": "księżyc i chmury",
+		"overcast": "chmury",
+		"rain": "słońce i deszcz",
+		"rainNight": "księżyc i deszcz",
+		"overcastRain": "chmury i deszcz",
+		"thunderstorm": "burza"
+	},
+	"statCard": {
+		"title": "o pogodzie"
+	},
+	"weatherAlerts": {
+		"fog": "mgła",
+		"heavySnowfall": "śnieżyca",
+		"violentRainShowers": "silna ulewa",
+		"thunderstorm": "burza",
+		"thunderstormWithSlightHail": "burza z lekkim gradem",
+		"thunderstormWithHeavyHail": "burza z ciężkim gradem"
+	},
+	"locationAutocomplete": {
+		"placeholder": "wyszukaj miejscowość, np. \"Warszawa\"",
+		"notFound": "brak wyników",
+		"typeToSearch": "zacznij pisać, aby wyszukać"
+	},
+	"detectLocation": {
+		"detect": "wykryj lokalizację"
+	},
+	"hourlyForecast": {
+		"title": "co godzinę"
+	},
+	"dailyForecast": {
+		"title": "kilka następnych dni"
+	},
+	"weatherClues": {
+		"title": "parę wskazówek",
+		"hourly": {
+			"clearSky": "świeci słońce - idź na zewnątrz 😎👍",
+			"mainlyClear": "trochę chmur, nic wielkiego",
+			"cloudyOrOvercast": "pochmurno 🙁",
+			"fog": "uważaj, mgła",
+			"drizzle": "mżawka 😱",
+			"heavyDrizzle": "gęsta mżawka",
+			"rain": "nie zapomnij parasola! ☔",
+			"snow": "patrz! śnieg!",
+			"rainShowers": "będzie ulewa",
+			"snowShowers": "będzie śnieżyca",
+			"thunderstorm": "uważaj na burze 💀",
+			"highUvIndex": "wysoki indeks uv",
+			"error": "coś poszło nie tak... napisz do autora"
+		}
+	},
+	"units": {
+		"celsius": "C",
+		"fahrenheit": "F",
+		"kmh": "km/h",
+		"mph": "mp/h",
+		"kn": "kn",
+		"inch": "cal",
+		"mm": "mm",
+		"hPa": "hPa",
+		"%": "%"
+	},
+	"footer": {
+		"author": "© daniel gołębiewski",
+		"notes": "uwagi"
+	},
+	"error": {
+		"weatherInfo": "sorry, nie mogliśmy pobrać pogody"
+	}
+}

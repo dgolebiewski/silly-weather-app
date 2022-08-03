@@ -5,7 +5,8 @@
 		"title": "general",
 		"languageTitle": "language",
 		"language": {
-			"en": "english"
+			"en": "english",
+			"pl": "polski"
 		}
 	},
   "units": {
